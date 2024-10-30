@@ -1,0 +1,70 @@
+# Primeira parte para fazer load na imagem e salvar.
+
+from PIL import Image
+
+def load_image(path):
+    """Carrega uma imagem de um arquivo."""
+    try:
+        image = Image.open(path)
+        return image
+    except Exception as e:
+        print(f"Erro ao carregar a imagem: {e}")
+        return None
+
+def save_image(image, path):
+    """Salva uma imagem no caminho especificado."""
+    try:
+        image.save(path)
+        print(f"Imagem salva em: {path}")
+    except Exception as e:
+        print(f"Erro ao salvar a imagem: {e}")
+
+
+#Essa parte é para transforma a imagem 
+
+from PIL import Image
+
+def resize_image(image, size):
+    """Redimensiona a imagem para o tamanho especificado."""
+    return image.resize(size)
+
+def rotate_image(image, angle):
+    """Roda a imagem pelo ângulo especificado (em graus)."""
+    return image.rotate(angle)
+
+def flip_image(image, mode='horizontal'):
+    """Espelha a imagem. Modo pode ser 'horizontal' ou 'vertical'."""
+    if mode == 'horizontal':
+        return image.transpose(Image.FLIP_LEFT_RIGHT)
+    elif mode == 'vertical':
+        return image.transpose(Image.FLIP_TOP_BOTTOM)
+    else:
+        raise ValueError("Modo deve ser 'horizontal' ou 'vertical'")
+
+
+#Essa parte é para poder boatar filtros nas imagens
+
+
+from PIL import Image, ImageFilter
+
+def blur_image(image, radius=2):
+    """Aplica o filtro de desfoque (blur) à imagem."""
+    return image.filter(ImageFilter.GaussianBlur(radius))
+
+def edge_detection(image):
+    """Aplica o filtro de detecção de bordas à imagem."""
+    return image.filter(ImageFilter.FIND_EDGES)
+
+def sharpen_image(image):
+    """Aplica o filtro de nitidez à imagem."""
+    return image.filter(ImageFilter.SHARPEN)
+
+
+
+# essa parte na qual chamarei o arquivo de __init__.py
+
+from .io import load_image, save_image
+from .transformations import resize_image, rotate_image, flip_image
+from .filters import blur_image, edge_detection, sharpen_image
+
+
